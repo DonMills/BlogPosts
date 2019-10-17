@@ -3,7 +3,7 @@
 
 ### by Don Mills
 
-_Update: When I originally wrote this article, CloudFormation was written in JSON only.  Thank goodness over the years YAML has replaced it as the primary way folks write their templates.  In light of that fact, and since this post still seems to benefit people, I've gone back and added YAML versions of the examples.  Enjoy!_
+_Update: When I originally wrote this article, CloudFormation was written in JSON only.  Thank goodness over the years YAML has replaced it as the primary way folks write their templates.  AWS also seems to have modified how the "Fn::Not" intrinsic function works.  In light of these facts, and since this post still seems to benefit people, I've gone back and added YAML versions of the examples and rewritten the section that used "Fn::Not" to use "Fn::If".  Enjoy!_
 
 
 One of the biggest maxims in Cloud DevOps (and Cloud Architecture in general) is the concept of “infrastructure as code”. This translates into a programmatic way to instantiate and configure environments that is not only self-documenting, but easily repeatable. Codifying the elements of a cloud deployment allows a process to be developed to predictably create the infrastructure multiple times, while eliminating the chances of human error resulting in misconfiguration or failure.  
@@ -19,6 +19,7 @@ For these situations, CloudFormation provides two elements known as Mappings and
 Let's work with an example scenario. Suppose you have a customer who is putting an application out into AWS. This application will have four separate environments: Development, Testing, QA, and Production. The customer wants to use the same CloudFormation template for all environments, but wants the process to be simple for any of their staff to be able to run the stack creation process. The customer also has the requirement of separate configuration items (subnets, security groups, etc.) for each environment, but does not want the deployment staff to have the ability to modify these values at stack creation time. In addition, the QA environment will need additional software installed during instance creation, and the Production environment cannot have an associated ssh key.  
 
 First step, the stack creator will need a way to choose which of the four environments are being created. So we start with a single parameter containing four choices in a drop down box:  
+
 ___JSON___  
 ```
 "Parameters" : {
@@ -52,6 +53,7 @@ Parameters:
 
 
 Now when the user runs the stack creation, they can choose what environment they are creating...but what to do with that information? Well, next we create a Mapping that lists all the environmental specific values:  
+
 ___JSON___ 
 ```
 "Mappings" : {  "Environments" : {
@@ -128,7 +130,7 @@ Mappings:
       ASMIN: 6
 ```
 
-And we follow that with two Conditional statements:
+And we follow that with two Conditional statements:  
 
 ___JSON___ 
 ```
@@ -156,6 +158,7 @@ These set two conditions based on the value chosen in the drop down box at stack
 Now that we have created our Mappings and Conditionals, we can use them throughout the template to create environment specific settings. Let's walk through a few examples.  
 
 To set the values for an Auto Scaling group:  
+
 ___JSON___ 
 ```
 "AppAutoScalingGroup" : {
@@ -192,6 +195,7 @@ AppAutoScalingGroup:
 
 
 So that takes care of the different environment values, but what about the special software configuration on the QA instances and the removal of the SSH key on Production? For that we use the conditionals we set earlier:  
+
 ___JSON___  
 ```
 "ServerLaunchConfig" : {
@@ -199,9 +203,9 @@ ___JSON___
   "Properties" : {
     ...
     "KeyName" : {
-      "Fn::Not": [ "ProdNotify",
-        "app-key",
-        {"Ref" : "AWS::NoValue"}
+      "Fn::If": [ "ProdNotify",
+        {"Ref" : "AWS::NoValue"},
+        "app-key"
     ]},
     "SecurityGroups" : {
       {"Fn::FindInMap" : [
@@ -232,11 +236,11 @@ ___JSON___
 ```
 ___YAML___  
 ```
-"ServerLaunchConfig" : {
-  "Type" : "AWS::AutoScaling::LaunchConfiguration",
-  "Properties" : {
+ServerLaunchConfig:
+  Type: AWS::AutoScaling::LaunchConfiguration
+  Properties: 
     ...
-    "KeyName" : {
+    KeyName: !If [condition_name, value_if_true, value_if_false]
       "Fn::Not": [ "ProdNotify",
         "app-key",
         {"Ref" : "AWS::NoValue"}
@@ -268,9 +272,9 @@ ___YAML___
 ```
 
 
-There are a few different things going on here so let's take them one at a time. The first item of import is the “KeyName” section where we use the “ProdNotify” conditional we set earlier. Remember if the stack creator picks “Prod” from the drop down box then this item is set to true. We use a special CloudFormation function (“Fn::Not”) to see if this value is true. If it is NOT, then we use the data provided (“app-key”). If it is, then we use another CloudFormation element (“Ref” : “AWS::NoValue”) to use no data at all, essentially setting the KeyName value to nothing.  
+There are a few different things going on here so let's take them one at a time. The first item of import is the “KeyName” section where we use the “ProdNotify” conditional we set earlier. Remember if the stack creator picks “Prod” from the drop down box then this item is set to true. We use a special CloudFormation function (“Fn::If”) to see if this value is true. If it is NOT, then we use the data provided (“app-key”). If it is, then we use another CloudFormation element (“Ref” : “AWS::NoValue”) to use no data at all, essentially setting the KeyName value to nothing.  
 
-Secondly, we use the Mappings again to set the “SecurityGroups” value. And finally, we use a similar CloudFormation function (“Fn::If”) to see if the stack creator selected QA as the environment. If so, we then add three additional commands to the end of the user data section which are executed after instance creation. If the condition is not true (the stack creator picked a different environment), we use the “Ref” : “AWS::NoValue” element to add nothing.  
+Secondly, we use the Mappings again to set the “SecurityGroups” value. And finally, we again use the CloudFormation function (“Fn::If”) to see if the stack creator selected QA as the environment. If so, we then add three additional commands to the end of the user data section which are executed after instance creation. If the condition is not true (the stack creator picked a different environment), we use the “Ref” : “AWS::NoValue” element to add nothing.  
 
 I hope this brief overview of CloudFormation Mappings and Conditionals can help you create templates that are cleaner, versatile, and more flexible. By using the power of these two elements, it becomes possible to make your CloudFormation usage more universal, and eliminates the need to have multiple or highly parameterized templates for multiple environment scenarios.  
 

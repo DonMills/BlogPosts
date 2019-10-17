@@ -17,7 +17,7 @@ For these situations, CloudFormation provides two elements known as Mappings and
 Let's work with an example scenario. Suppose you have a customer who is putting an application out into AWS. This application will have four separate environments: Development, Testing, QA, and Production. The customer wants to use the same CloudFormation template for all environments, but wants the process to be simple for any of their staff to be able to run the stack creation process. The customer also has the requirement of separate configuration items (subnets, security groups, etc.) for each environment, but does not want the deployment staff to have the ability to modify these values at stack creation time. In addition, the QA environment will need additional software installed during instance creation, and the Production environment cannot have an associated ssh key.  
 
 First step, the stack creator will need a way to choose which of the four environments are being created. So we start with a single parameter containing four choices in a drop down box:  
-
+___JSON___  
 ```
 "Parameters" : {
             "EnvironmentValue" : { 
@@ -33,7 +33,7 @@ First step, the stack creator will need a way to choose which of the four enviro
                                  }
                }
 ```
-___JSON___  
+___YAML___ 
 ```
 Parameters: 
   EnvironmentValue: 
@@ -46,11 +46,11 @@ Parameters:
     Description: "What environment is this?"
     Type: String
 ```
-___YAML___ 
+
 
 
 Now when the user runs the stack creation, they can choose what environment they are creating...but what to do with that information? Well, next we create a Mapping that lists all the environmental specific values:  
-
+___JSON___ 
 ```
 "Mappings" : {  "Environments" : {
     "Dev" : { 
@@ -84,7 +84,7 @@ Now when the user runs the stack creation, they can choose what environment they
   }
 },
 ```
-___JSON___ 
+___YAML___  
 ```
 Mappings: 
   Environments:
@@ -125,15 +125,17 @@ Mappings:
       ASMAX: 9 
       ASMIN: 6
 ```
-___YAML___  
+
 And we follow that with two Conditional statements:
+
+___JSON___ 
 ```
 "Conditions" : {
   "QANotify" : {"Fn::Equals" : [{"Ref" : "EnvironmentValue"}, "QA"]},
   "ProdNotify" : {"Fn::Equals" : [{"Ref" : "EnvironmentValue"}, "Prod"]}
 },
 ```
-___JSON___ 
+___YAML___
 ```
 Conditions:
   QANotify:
@@ -145,14 +147,14 @@ Conditions:
       - !Ref "EnvironmentValue"
       - "Prod"  
 ```
-___YAML___  
+  
 
 These set two conditions based on the value chosen in the drop down box at stack creation time. If the value is “QA”, the “QANotify” conditional becomes true. And if the value is “Prod”, then “ProdNotify” conditional becomes true. Note that only one of these can be true at any given time.  
 
 Now that we have created our Mappings and Conditionals, we can use them throughout the template to create environment specific settings. Let's walk through a few examples.  
 
 To set the values for an Auto Scaling group:  
-
+___JSON___ 
 ```
 "AppAutoScalingGroup" : {
   "Type" : "AWS::AutoScaling::AutoScalingGroup",
@@ -174,12 +176,13 @@ To set the values for an Auto Scaling group:
     ...
 },
 ```
-___JSON___ 
-```
-```
 ___YAML___  
+```
+```
+
 
 So that takes care of the different environment values, but what about the special software configuration on the QA instances and the removal of the SSH key on Production? For that we use the conditionals we set earlier:  
+___JSON___  
 ```
 "ServerLaunchConfig" : {
   "Type" : "AWS::AutoScaling::LaunchConfiguration",
@@ -217,10 +220,10 @@ So that takes care of the different environment values, but what about the speci
         ]
       }
 ```
-___JSON___  
-```
-```
 ___YAML___  
+```
+```
+
 
 There are a few different things going on here so let's take them one at a time. The first item of import is the “KeyName” section where we use the “ProdNotify” conditional we set earlier. Remember if the stack creator picks “Prod” from the drop down box then this item is set to true. We use a special CloudFormation function (“Fn::Not”) to see if this value is true. If it is NOT, then we use the data provided (“app-key”). If it is, then we use another CloudFormation element (“Ref” : “AWS::NoValue”) to use no data at all, essentially setting the KeyName value to nothing.  
 

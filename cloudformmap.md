@@ -21,18 +21,33 @@ First step, the stack creator will need a way to choose which of the four enviro
 ```
 "Parameters" : {
             "EnvironmentValue" : { 
- "AllowedValues" : [
+                        "AllowedValues" : [
                                                 "Dev",
                                                 "Test",
                                                 "QA",
                                                 "Prod"
-                                                ],
-                                    "Default" : "Dev",
-                                    "Description" : "What environment is this?",
-                                    "Type" : "String"
-                        }
-}
+                                          ],
+                       "Default" : "Dev",
+                       "Description" : "What environment is this?",
+                       "Type" : "String"
+                                 }
+               }
 ```
+_JSON_  
+```
+Parameters: 
+  EnvironmentValue: 
+    AllowedValues:
+      - "Dev"
+      - "Test"
+      - "QA"
+      - "Prod"
+    Default: "Dev"
+    Description: "What environment is this?"
+    Type: String
+```
+_YAML_  
+
 
 Now when the user runs the stack creation, they can choose what environment they are creating...but what to do with that information? Well, next we create a Mapping that lists all the environmental specific values:  
 
@@ -76,6 +91,19 @@ And we follow that with two Conditional statements:
   "ProdNotify" : {"Fn::Equals" : [{"Ref" : "EnvironmentValue"}, "Prod"]}
 },
 ```
+_JSON_  
+```
+Conditions:
+  QANotify:
+    'Fn::Equals':
+      - !Ref "EnvironmentValue"
+      - "QA"
+  ProdNotify:
+    'Fn::Equals':
+      - !Ref "EnvironmentValue"
+      - "Prod"  
+```
+_YAML_  
 
 These set two conditions based on the value chosen in the drop down box at stack creation time. If the value is “QA”, the “QANotify” conditional becomes true. And if the value is “Prod”, then “ProdNotify” conditional becomes true. Note that only one of these can be true at any given time.  
 

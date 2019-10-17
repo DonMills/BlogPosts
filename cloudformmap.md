@@ -33,7 +33,7 @@ First step, the stack creator will need a way to choose which of the four enviro
                                  }
                }
 ```
-_JSON_  
+___JSON___  
 ```
 Parameters: 
   EnvironmentValue: 
@@ -46,7 +46,7 @@ Parameters:
     Description: "What environment is this?"
     Type: String
 ```
-_YAML_  
+___YAML___ 
 
 
 Now when the user runs the stack creation, they can choose what environment they are creating...but what to do with that information? Well, next we create a Mapping that lists all the environmental specific values:  
@@ -84,6 +84,48 @@ Now when the user runs the stack creation, they can choose what environment they
   }
 },
 ```
+___JSON___ 
+```
+Mappings: 
+  Environments:
+    Dev:  
+      ELB: App-Dev 
+      SecurityGroup: sg-12345678
+      Subnets: 
+        - subnet-aaaaaaaa
+        - subnet-bbbbbbbb
+        - subnet-cccccccc 
+      ASMAX: 1 
+      ASMIN: 1
+    Test:
+      ELB: App-Test 
+      SecurityGroup: sg-12345678
+      Subnets: 
+        - subnet-dddddddd
+        - subnet-eeeeeeee
+        - subnet-ffffffff 
+      ASMAX: 1 
+      ASMIN: 1
+    QA:  
+      ELB: App-QA 
+      SecurityGroup: sg-87654321 
+      Subnets:
+        - subnet-11111111
+        - subnet-22222222
+        - subnet-33333333
+      ASMAX: 6 
+      ASMIN: 3
+    Prod:  
+      ELB: App-Prod 
+      SecurityGroup: sg-87654321 
+      Subnets: 
+        - subnet-44444444
+        - subnet-55555555
+        - subnet-66666666 
+      ASMAX: 9 
+      ASMIN: 6
+```
+___YAML___  
 And we follow that with two Conditional statements:
 ```
 "Conditions" : {
@@ -91,7 +133,7 @@ And we follow that with two Conditional statements:
   "ProdNotify" : {"Fn::Equals" : [{"Ref" : "EnvironmentValue"}, "Prod"]}
 },
 ```
-_JSON_  
+___JSON___ 
 ```
 Conditions:
   QANotify:
@@ -103,7 +145,7 @@ Conditions:
       - !Ref "EnvironmentValue"
       - "Prod"  
 ```
-_YAML_  
+___YAML___  
 
 These set two conditions based on the value chosen in the drop down box at stack creation time. If the value is “QA”, the “QANotify” conditional becomes true. And if the value is “Prod”, then “ProdNotify” conditional becomes true. Note that only one of these can be true at any given time.  
 
@@ -132,6 +174,11 @@ To set the values for an Auto Scaling group:
     ...
 },
 ```
+___JSON___ 
+```
+```
+___YAML___  
+
 So that takes care of the different environment values, but what about the special software configuration on the QA instances and the removal of the SSH key on Production? For that we use the conditionals we set earlier:  
 ```
 "ServerLaunchConfig" : {
@@ -170,6 +217,11 @@ So that takes care of the different environment values, but what about the speci
         ]
       }
 ```
+___JSON___  
+```
+```
+___YAML___  
+
 There are a few different things going on here so let's take them one at a time. The first item of import is the “KeyName” section where we use the “ProdNotify” conditional we set earlier. Remember if the stack creator picks “Prod” from the drop down box then this item is set to true. We use a special CloudFormation function (“Fn::Not”) to see if this value is true. If it is NOT, then we use the data provided (“app-key”). If it is, then we use another CloudFormation element (“Ref” : “AWS::NoValue”) to use no data at all, essentially setting the KeyName value to nothing.  
 
 Secondly, we use the Mappings again to set the “SecurityGroups” value. And finally, we use a similar CloudFormation function (“Fn::If”) to see if the stack creator selected QA as the environment. If so, we then add three additional commands to the end of the user data section which are executed after instance creation. If the condition is not true (the stack creator picked a different environment), we use the “Ref” : “AWS::NoValue” element to add nothing.  

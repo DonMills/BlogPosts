@@ -178,6 +178,14 @@ ___JSON___
 ```
 ___YAML___  
 ```
+AppAutoScalingGroup: 
+  Type: AWS::AutoScaling::AutoScalingGroup"
+    ...
+    LoadBalancerNames:
+      - !FindInMap [Environments, !Ref EnvironmentValue, ELB]
+    MinSize: !FindInMap [Environments, !Ref EnvironmentValue, ASMIN]
+    MaxSize: !FindInMap [Environments, !Ref EnvironmentValue, ASMAX]
+    VPCZoneIdentifier: !FindInMap [Environments, !Ref EnvironmentValue, Subnets]
 ```
 
 
@@ -222,6 +230,39 @@ ___JSON___
 ```
 ___YAML___  
 ```
+"ServerLaunchConfig" : {
+  "Type" : "AWS::AutoScaling::LaunchConfiguration",
+  "Properties" : {
+    ...
+    "KeyName" : {
+      "Fn::Not": [ "ProdNotify",
+        "app-key",
+        {"Ref" : "AWS::NoValue"}
+    ]},
+    "SecurityGroups" : {
+      {"Fn::FindInMap" : [
+        "Environments",
+        { "Ref" : "EnvironmentValue"},
+        "SecurityGroup"
+        ]
+      }},
+    ...
+    "UserData" : {
+      "Fn::Base64" : {
+        "Fn::Join" : [
+        "\n",
+        ["#!/bin/bash -v",
+        "command1",
+        "command2”,
+        { "Fn::If" : [
+          "QANotify",
+          { "Fn::Join" : [
+          "\n",
+          ["qacommand1",
+          "qacommand2",
+          "qacommand3"]
+          ]},
+          {"Ref" : "AWS::NoValue"}
 ```
 
 

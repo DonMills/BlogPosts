@@ -3,7 +3,7 @@
 
 ### by Don Mills
 
-_Update: When I originally wrote this article, CloudFormation was written in JSON only.  Thank goodness over the years YAML has replaced it as the primary way folks write their templates.  AWS also seems to have modified how the "Fn::Not" intrinsic function works since I created the samples.... In light of these facts, and since this post still seems to benefit people, I've gone back and added YAML versions of the examples and rewritten the section that used "Fn::Not" to use "Fn::If".  Enjoy!_
+_Update: When I originally wrote this article, CloudFormation was written in JSON only.  Thank goodness over the years YAML has replaced it as the primary way folks write their templates.  AWS also seems to have completely modified how the "Fn::Not" intrinsic function works since I created the samples.... In light of these facts, and since this post still seems to benefit people, I've gone back and added YAML versions of the examples and rewritten the section that used "Fn::Not" to use "Fn::If".  Enjoy!_
 
 
 One of the biggest maxims in Cloud DevOps (and Cloud Architecture in general) is the concept of “infrastructure as code”. This translates into a programmatic way to instantiate and configure environments that is not only self-documenting, but easily repeatable. Codifying the elements of a cloud deployment allows a process to be developed to predictably create the infrastructure multiple times, while eliminating the chances of human error resulting in misconfiguration or failure.  

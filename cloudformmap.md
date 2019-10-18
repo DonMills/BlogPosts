@@ -205,7 +205,7 @@ ___JSON___
     "KeyName" : {
       "Fn::If": [ "ProdNotify",
         {"Ref" : "AWS::NoValue"},
-        "app-key"
+        "app-keypair-name"
     ]},
     "SecurityGroups" : {
       {"Fn::FindInMap" : [
@@ -240,39 +240,22 @@ ServerLaunchConfig:
   Type: AWS::AutoScaling::LaunchConfiguration
   Properties: 
     ...
-    KeyName: !If [condition_name, value_if_true, value_if_false]
-      "Fn::Not": [ "ProdNotify",
-        "app-key",
-        {"Ref" : "AWS::NoValue"}
-    ]},
-    "SecurityGroups" : {
-      {"Fn::FindInMap" : [
-        "Environments",
-        { "Ref" : "EnvironmentValue"},
-        "SecurityGroup"
-        ]
-      }},
+    KeyName: !If [ProdNotify, !Ref "AWS::NoValue", app-keypair-name]
+    SecurityGroups:
+      - !FindInMap [Environments, !Ref EnvironmentValue, SecurityGroup]
     ...
-    "UserData" : {
-      "Fn::Base64" : {
-        "Fn::Join" : [
-        "\n",
-        ["#!/bin/bash -v",
-        "command1",
-        "command2”,
-        { "Fn::If" : [
-          "QANotify",
-          { "Fn::Join" : [
-          "\n",
-          ["qacommand1",
-          "qacommand2",
-          "qacommand3"]
-          ]},
-          {"Ref" : "AWS::NoValue"}
+    UserData: 
+      Fn::Base64: 
+        !Join
+          - "\n"
+          - - "#!/bin/bash -v"
+            - "command1"
+            - "command2”
+            - !If [QANotify, !Join [ "\n", [ "qacommand1", "qacommand2", "qacommand3"]], !Ref "AWS::NoValue"]
 ```
 
 
-There are a few different things going on here so let's take them one at a time. The first item of import is the “KeyName” section where we use the “ProdNotify” conditional we set earlier. Remember if the stack creator picks “Prod” from the drop down box then this item is set to true. We use a special CloudFormation function (“Fn::If”) to see if this value is true. If it is NOT, then we use the data provided (“app-key”). If it is, then we use another CloudFormation element (“Ref” : “AWS::NoValue”) to use no data at all, essentially setting the KeyName value to nothing.  
+There are a few different things going on here so let's take them one at a time. The first item of import is the “KeyName” section where we use the “ProdNotify” conditional we set earlier. Remember if the stack creator picks “Prod” from the drop down box then this item is set to true. We use a special CloudFormation function (“Fn::If”) to see if this value is true. If it is NOT, then we use the data provided (“app-keypair-name”). If it is, then we use another CloudFormation element (“Ref” : “AWS::NoValue”) to use no data at all, essentially setting the KeyName value to nothing.  
 
 Secondly, we use the Mappings again to set the “SecurityGroups” value. And finally, we again use the CloudFormation function (“Fn::If”) to see if the stack creator selected QA as the environment. If so, we then add three additional commands to the end of the user data section which are executed after instance creation. If the condition is not true (the stack creator picked a different environment), we use the “Ref” : “AWS::NoValue” element to add nothing.  
 

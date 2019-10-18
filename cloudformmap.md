@@ -184,7 +184,7 @@ ___JSON___
 ___YAML___  
 ```
 AppAutoScalingGroup: 
-  Type: AWS::AutoScaling::AutoScalingGroup"
+  Type: AWS::AutoScaling::AutoScalingGroup
     ...
     LoadBalancerNames:
       - !FindInMap [Environments, !Ref EnvironmentValue, ELB]

@@ -1,6 +1,6 @@
 ### Service Meshes for Infrastructure/DevOps Teams: An Introduction
 
-Service meshes as a concept have been gradually growing in perception and usage over the past year or so.  You may have heard the term mentioned in relation to containers, or microservices, or Kubernetes, or any number of other industry buzzwords.  Possibly you have a team of developers that is starting a new containerized project and to properly support them you need some visibility and control over thier traffic -- or you may have seen cloud providers beginning to offer their own service mesh products and been curious.  
+Service meshes as a concept have been gradually growing in perception and usage over the past year or so.  You may have heard the term mentioned in relation to containers, or microservices, or Kubernetes, or any number of other industry buzzwords.  Possibly you have a team of developers that is starting a new containerized project and to properly support them you need some visibility and control over their traffic -- or you may have seen cloud providers beginning to offer their own service mesh products and been curious.  
 
 But what are service meshes?  What makes them different from the way it's always been done? And most importantly, why should you care?
 

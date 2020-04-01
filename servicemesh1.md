@@ -17,7 +17,11 @@ The current situation is miles beyond where it used to be, with legacy applicati
 
 The developers continually ask for help in debugging application latency, and she has nothing to show them beyond container virtual interface statistics.  And the security team is beginning to ask questions about the authorization and authentication to all these new services, but all she can tell them is that the developers are hoping to do "something with oauth2".
 
-Mallikarjun has his own problems. As a developer at ExampleCo, he is working on a new front-end service that calls a containerized backend service.  His first problem is service discovery.  He can query DNS for the name of the service, and it will return an IP address of a container.  But unless he queries DNS every time he wants to utilize the service he'll just end up going to the same container over and over again. Speaking of which, how should his code handle a failed request?  Should he just resend it until he gets a response?
+Mallikarjun has his own problems. As a developer at ExampleCo, he is working on a new front-end service that calls a containerized backend service.  
+
+His first problem is service discovery.  He can query DNS for the name of the service, and it will return an IP address of a container.  But unless he queries DNS every time he wants to utilize the service, he'll just end up going to the same container over and over again.  What happens if the container dies?
+
+And speaking of that, how should his code handle a failed request?  Should he just resend it until he gets a response?
 
 ###  What it is, how it works, and why it's cool.
 
@@ -49,7 +53,7 @@ But this is also where the service mesh gains its powers for the operational sid
 
 Everything we've discussed so far would form what is considered in networking as the "Data Plane" - it's where the traffic flows.  Well every good Data Plane also has to have a "Control Plane" to tell it how to work, and a "Management Plane" so the enduser can configure everything.  
 
-And for service meshes, those other two planes (consider them as one configuration point) is the other magical thirty percent.  Because all those individual envoy proxies that make up the mesh are all configured centrally.  Each one of our big three implementations goes about it a different way, but each one provides a centralized management function that is used to configure the entire mesh as a whole.
+And for service meshes, those other two planes (consider them as one configuration point) are the other magical thirty percent.  Because all those individual envoy proxies that make up the mesh are configured centrally.  Each one of our big three implementations goes about it a different way, but each one provides a centralized management function that is used to configure the entire mesh as a whole.
 
 Here from the [istio security documentation](https://istio.io/docs/concepts/security/) is a diagram showing how their control plane implementation interacts with the mesh endpoints.
 
@@ -58,6 +62,7 @@ Here from the [istio security documentation](https://istio.io/docs/concepts/secu
 This centralized control plane gives the operations side an ability to set policy for the mesh (usually via infrastructure as code on the management plane) that all existing and any new members receive.  These policy actions can be scoped globally, or per service, or other designations (_depends on implementation_).
 
 Let me give you an example to illustrate:  
+
 Your new microservice based application is beginning to experience issues.  The Devops team investigates and determines one of the core services is getting hammered by some new test code.  The team can update the service mesh to do global rate limiting on the service.  Every envoy proxy in the mesh will receive the configuration and begin to measure traffic to that service (_no matter how many containers it contains_) based on a global bucket and can throttle traffic locally before it ever gets onto the mesh...
 
 As you can see, powerful and exciting capabilities!  And when you add in the observability that the service mesh adds as well (each envoy proxy can log for mesh wide tracing) you can begin to see why we at SingleStone Consulting are really starting to develop feelings for service meshes.
@@ -68,7 +73,7 @@ After implementing a service mesh things at ExampleCo are starting to look diffe
 
 Julia is able to use the detailed tracing information that the service mesh provides to help her developers with end to end request tracing throughout complicated multiple microservice components.  She is able to demonstrate to the security team that mutual TLS authentication (PKI) is used by default throughout the mesh, and all applications that use it.  She can also show the security team that all traffic is now encrypted in motion, which she was sure was going to be their next request.
 
-Mallikarjun was able to finish his previous project early and move to his next one.  He is confident in the ability of the service mesh to handle things like service discovery and retires, and so he can focus more on the business logic side of the applications he creates.
+Mallikarjun was able to finish his previous project early and move to his next one.  He is confident in the ability of the service mesh to handle things like service discovery and retries, and so he can focus more on the business logic side of the applications he creates.
 
 ### Wrap Up
 

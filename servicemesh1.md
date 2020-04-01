@@ -39,13 +39,6 @@ And here is where I'd say seventy percent of the service mesh magic is - the pro
 Every "service endpoint" (_typically a container running parts of an application_) has it's own individual "proxy endpoint" (_Envoy running in another container_).  For one service endpoint to talk to another, they don't need to know anything beyond sending traffic to the proxy.  It's the proxy that handles everything else.
 
 ![mesh flow](./images/meshflow.png)
-```
-{Potential Diagram}
-Endpoint A container ->##local##-> Envoy A container ->#####Service Mesh#####-> Envoy B container ->##Local##-> Endpoint B container
-        \                                /                                            \                                /
-                 Host A                                                                              Host B
-  
-```
 
 This is one of the primary benefits to the developer of a service mesh.  All the complexities of coding in things like service discovery or retries - and even more complex things like circuit breakers and exponential backoff - is taken away.  You just need to send a request and receive it on the other side.
 

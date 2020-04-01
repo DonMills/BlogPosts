@@ -8,9 +8,16 @@ In this first article I'm going to propose some answers to those questions. And 
 
 _Note: we will be primarily discussing service meshes based off of the [Envoy proxy](https://www.envoyproxy.io/) created by Lyft.  These include istio, AWS App Mesh, and Google Cloud Traffic Manager._
 
-First, let's have a little look at how things are usually done today.
+First, let's have a quick look at how things are usually done today.
 
-### The Perils of Julia
+### The Perils of ExampleCo
+Julia has an interesting set of problems.  As head of the devops support team for ExampleCo's business application division, she has participated in engineering herself into a bit of a mess.
+
+The current situation is miles beyond where it used to be, with legacy applications that required extensive amounts of specialized care and feeding sapping all of her team's time.  But her enthusuastic championing of modern development practives has caught on a bit _too_ well, and far quicker than she expected.  Now she has microservices and container based applications popping up all over the place, with not much in the way of controlling or monitoring the chaos.  
+
+The developers continually ask for help in debugging application latency, and she has nothing to show them beyond container virtual interface statistics.  And the security team is beginning to ask questions about the authorization and authentication to all these new services, but all she can tell them is that the developers are hoping to do "something with oauth2".
+
+Mallikarjun has his own problems. As a developer at ExampleCo, he is working on a new front-end service that calls a containerized backend service.  His first problem is service discovery.  He can query DNS for the name of the service, and it will return an IP address of a container.  But unless he queries DNS every time he wants to utilize the service he'll just end up going to the same container over and over again. Speaking of which, how should his code handle a failed request?  Should he just resend it until he gets a response?
 
 ###  What it is, how it works, and why it's cool.
 

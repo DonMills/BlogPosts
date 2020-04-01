@@ -10,7 +10,7 @@ _Note: we will be primarily discussing service meshes based off of the [Envoy pr
 
 First, let's have a quick look at how things are usually done today.
 
-### The Perils of ExampleCo
+### The Perils of ExampleCo (6 months ago)
 Julia has an interesting set of problems.  As head of the devops support team for ExampleCo's business application division, she has participated in engineering herself into a bit of a mess.
 
 The current situation is miles beyond where it used to be, with legacy applications that required extensive amounts of specialized care and feeding sapping all of her team's time.  But her enthusuastic championing of modern development practives has caught on a bit _too_ well, and far quicker than she expected.  Now she has microservices and container based applications popping up all over the place, with not much in the way of controlling or monitoring the chaos.  
@@ -38,6 +38,7 @@ And here is where I'd say seventy percent of the service mesh magic is - the pro
 
 Every "service endpoint" (_typically a container running parts of an application_) has it's own individual "proxy endpoint" (_Envoy running in another container_).  For one service endpoint to talk to another, they don't need to know anything beyond sending traffic to the proxy.  It's the proxy that handles everything else.
 
+![mesh flow](./images/meshflow.png)
 ```
 {Potential Diagram}
 Endpoint A container ->##local##-> Envoy A container ->#####Service Mesh#####-> Envoy B container ->##Local##-> Endpoint B container
@@ -68,13 +69,19 @@ Your new microservice based application is beginning to experience issues.  The 
 
 As you can see, powerful and exciting capabilities!  And when you add in the observability that the service mesh adds as well (each envoy proxy can log for mesh wide tracing) you can begin to see why we at SingleStone Consulting are really starting to develop feelings for service meshes.
 
+### Back to ExampleCo (today)
+
+After implementing a service mesh things at ExampleCo are starting to look different.  
+
+Julia is able to use the detailed tracing information that the service mesh provides to help her developers with end to end request tracing throughout complicated multiple microservice components.  She is able to demonstrate to the security team that mutual TLS authentication (PKI) is used by default throughout the mesh, and all applications that use it.  She can also show the security team that all traffic is now encrypted in motion, which she was sure was going to be their next request.
+
+Mallikarjun was able to finish his previous project early and move to his next one.  He is confident in the ability of the service mesh to handle things like service discovery and retires, and so he can focus more on the business logic side of the applications he creates.
+
 ### Wrap Up
 
 Hopefully that has given you a high level understanding of what a service mesh is and what it can do for you. For fear of spiraling into a long technical digression I will stop there for today.
 
-My goal is to continue to get deeper into this subject with actual technical examples and in-depth discussions (starting with AWS App Mesh), so if that's of interest to you please keep your eyes out for followups!
+My goal is to continue to get much deeper into the technical side of the three implementations I mentioned up top (istio, GCP Traffic Manager, AWS App Mesh) as I move along this blog series, so be on the lookout for following posts! 
 
 As always, SingleStone Consulting would love to to help you with your cloud and devops needs.  Contact us, and let's talk about service meshes and how we can help you implement them in your favorite cloud or on-premise environment today.
-
-It is my goal to get much deeper into the technical side of the three implementations I mentioned up top (istio, GCP Traffic Manager, AWS App Mesh) as I move along this blog series, so be on the lookout for following posts!
 

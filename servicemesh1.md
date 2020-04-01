@@ -13,7 +13,7 @@ First, let's have a quick look at how things are usually done today.
 ### The Perils of ExampleCo (6 months ago)
 Julia has an interesting set of problems.  As head of the devops support team for ExampleCo's business application division, she has participated in engineering herself into a bit of a mess.
 
-The current situation is miles beyond where it used to be, with legacy applications that required extensive amounts of specialized care and feeding sapping all of her team's time.  But her enthusuastic championing of modern development practives has caught on a bit _too_ well, and far quicker than she expected.  Now she has microservices and container based applications popping up all over the place, with not much in the way of controlling or monitoring the chaos.  
+The current situation is miles beyond where it used to be, with legacy applications that required extensive amounts of specialized care and feeding sapping all of her team's time.  But her enthusuastic championing of modern development practices has caught on a bit _too_ well, and far quicker than she expected.  Now she has microservices and container based applications popping up all over the place, with not much in the way of controlling or monitoring the chaos.  
 
 The developers continually ask for help in debugging application latency, and she has nothing to show them beyond container virtual interface statistics.  And the security team is beginning to ask questions about the authorization and authentication to all these new services, but all she can tell them is that the developers are hoping to do "something with oauth2".
 

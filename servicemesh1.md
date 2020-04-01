@@ -71,7 +71,7 @@ As you can see, powerful and exciting capabilities!  And when you add in the obs
 
 After implementing a service mesh, things at ExampleCo are starting to look different...  
 
-Julia is able to use the detailed tracing information that the service mesh provides to help her developers with end to end request tracing throughout complicated multiple microservice components.  She is able to demonstrate to the security team that mutual TLS authentication (PKI) is used by default throughout the mesh, and all applications that use it.  She can also show the security team that all traffic is now encrypted in motion, which she was sure was going to be their next request.
+Julia is able to use the detailed tracing information that the service mesh provides to help her developers with end to end request tracing throughout complicated multiple microservice components.  She is able to demonstrate to the security team that mutual TLS authentication (PKI) is used by default throughout the mesh, and all applications that utilize it.  She can also show the security team that all internal application traffic is now encrypted in motion, which she was sure was going to be their next request.
 
 Mallikarjun was able to finish his previous project early and move to his next one.  He is confident in the ability of the service mesh to handle things like service discovery and retries, and so he can focus more on the business logic side of the applications he creates.
 

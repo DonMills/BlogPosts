@@ -50,7 +50,7 @@ Everything we've discussed so far would form what is considered in networking as
 
 And for service meshes, those other two planes (consider them as one configuration point) is the other magical thirty percent.  Because all those individual envoy proxies that make up the mesh are all configured centrally.  Each one of our big three implementations goes about it a different way, but each one provides a centralized management function that is used to configure the entire mesh as a whole.
 
-Here from the [istio security documentation](https://istio.io/docs/concepts/security/) is a diagram showing how thier control plane implementation interacts with the mesh endpoints.
+Here from the [istio security documentation](https://istio.io/docs/concepts/security/) is a diagram showing how their control plane implementation interacts with the mesh endpoints.
 
 ![istio security](./images/arch-sec.svg)
 

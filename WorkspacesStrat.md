@@ -12,7 +12,7 @@ But now Alicia can't go to her office.  And even if she took her laptop home, it
 
 #### Operations through intermittent VPN connections
 
-Unless you planned for this, and have lots of bandwidth (and robust scaleable VPN termination) I'm sure you've seen some interesting issues.  Not just the ones at first, where the load was more than anyone planned.  I mean the slow creep operational and security problems that have arisen. 
+Unless you planned for this, and have lots of bandwidth (and robust, scaleable VPN termination) I'm sure you've seen some interesting issues.  Not just the ones at first - where the load was more than anyone planned.  I mean the slow, creeping operational and security problems that have arisen. 
 
 Like unless you prepared with SaaS or public virus updates, there's that virus database update that happens often when people connect to the VPN.  And unless you do automated updates direct from a public source, there's the matter of pushing patches and updates across the VPN connection.
 
@@ -26,7 +26,7 @@ Here's another interesting one we've seen at SingleStone.  Since moving from on-
 I consider there to be three broad categories of "remote work" readiness.
 1. Zero trust - all of your apps are written to be accessed anywhere, via HTTPS.  You have publically accessible authentication and authorization methods, likely with hardware or software MFA.  Your workers can come on any device from anywhere.
 2. Hybrid VPN - you have the VPN infrastructure to support your entire workforce remotely.  You issue corporate compute devices, and have invested in SaaS or cloud based tools for anti-virus, endpoint protection, and device management/updates.  Email and office tools are SaaS or publically accessible, and the VPN exists to support access to legacy applications.
-3. All-in VPN - you have a VPN infrastructure, but it was originally designed for disaster recovery.  You issue corporate compute devices, but your operational and security tools are still mostly on-premise based, and access to pretty much everything is done over the VPN.
+3. All-in VPN - you have a VPN infrastructure, but it was likely originally designed for disaster recovery.  You issue corporate compute devices, but your operational and security tools are still mostly on-premise based, and access to pretty much everything is done over the VPN.
 
 Unless you are one of the mythical and fortunate few that can honestly claim to be in the first category, the move to all remote work has likely caused you at least some issues, even if only financial impact for hardware and software costs.
 

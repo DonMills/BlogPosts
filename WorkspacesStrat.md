@@ -18,6 +18,7 @@ Like unless you prepared with SaaS or public virus updates, there's that virus d
 
 Even then, although Alicia knows that her work laptop is for work, sometimes she uses it for other things.  And she happened to accidentally click on the wrong link during the weekend... and when she connected to the VPN Monday morning before the virus updates were pushed to her pc some interesting "software" made its way onto a server.
 
+{drop}
 Here's another interesting one we've seen at SingleStone.  Since moving from on-premise Active Directory to all cloud (Azure AD) during the quarantine we still have some users that when they last logged into the directory with their laptops, it was on premise.  So they are operating with old credentials, but they can't change their passwords without someone __touching__ their laptop to change domain membership.
 
 #### Three states of readiness

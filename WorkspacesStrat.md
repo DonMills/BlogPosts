@@ -32,7 +32,8 @@ Unless you are one of the mythical and fortunate few that can honestly claim to 
 
 #### Ok, so how can AWS Workspaces help?
 
-AWS Workspaces {link} are a cloud spin on an old idea - Virtual Desktops. Wait, no - don't stop reading. Give me a minute here.
-We all know that VDI (virtual desktop initiatives) have long been overly complex and expensive.  While some places still use them, they've fallen out of favor over the years.  The cost of the storage alone can be prohibitive.
+AWS Workspaces {link} are a cloud spin on an old idea - Virtual Desktops. Wait, no - don't stop reading. Give me a minute here.  
+
+We all know that VDI (virtual desktop initiatives) have long been overly complex and expensive.  While some places still use them, they've fallen out of favor over the years.  The cost of the storage  alone can be prohibitive.
 
 But you know who has tons of storage and compute power ready?  AWS. 

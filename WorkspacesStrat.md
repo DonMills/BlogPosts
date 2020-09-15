@@ -24,9 +24,10 @@ Here's another interesting one we've seen at SingleStone.  Since moving from on-
 
 I consider there to be three broad categories of "remote work" readiness.
 1. Zero trust - all of your apps are written to be accessed anywhere, via HTTPS.  You have publically accessible authentication and authorization methods, likely with hardware or software MFA.  Your workers can come on any device from anywhere.
-2. High level VPN - you have the VPN infrastructure to support your entire workforce remotely.  You issue corporate compute devices, and have invested in SaaS or cloud based tools for anti-virus, endpoint protection, and device management/updates.  Email and office tools are SaaS or publically accessible, and the VPN exists to support access to legacy applications.
-3. VPNish - you have a VPN infrastructure, but it was originally designed for disaster recovery.  Your operational and security tools are still mostly on-premise based, and access to pretty much everything is done over the VPN.
+2. Hybrid VPN - you have the VPN infrastructure to support your entire workforce remotely.  You issue corporate compute devices, and have invested in SaaS or cloud based tools for anti-virus, endpoint protection, and device management/updates.  Email and office tools are SaaS or publically accessible, and the VPN exists to support access to legacy applications.
+3. All-in VPN - you have a VPN infrastructure, but it was originally designed for disaster recovery.  You issue corporate compute devices, but your operational and security tools are still mostly on-premise based, and access to pretty much everything is done over the VPN.
 
+Unless you are one of the mythical and fortunate few that can honestly claim to be in the first category, the move to all remote work has likely caused you at least some issues, even if only financial impact for hardware and software costs.
 
-
+#### Ok, so how can AWS Workspaces help?
 

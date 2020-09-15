@@ -4,7 +4,7 @@
 
 So I don't think it will surprise anyone if I make the statement that the average work day and environment has undertaken a complete shift over the last 6 or so months.  Employees that would have come to sit at a dedicated office space every day are now are having to work from a variety of places and situations that are not so... under your organization's control.
 
-For a lot of companies, this has been a difficult and ongoing change -- even from purely procedural and cultural perspectives.  But for every business manager that worries how productivity will keep up in this new world, there equally IT operations and cyber security teams that are literally in a nightmare.
+For a lot of companies, this has been a difficult and ongoing change -- even from purely procedural and cultural perspectives.  But for every business manager that worries how productivity will keep up in this new world, there are equally IT operations and cyber security teams that are under pressure.
 
 You see, most organizations have traditionally focused on a "fortification" strategy to protect their internal information technology assets.  There would be dedicated portions of the network where assets would be placed, and access to those assets was often enforced at a network level by firewalls and other dedicated devices.  Similarly, the employee would be issued a company configured and controlled desktop or laptop, which was often also protected by various enterprise anti-virus and endpoint protection tools.  The entire ecosystem was designed so that when Alicia was sitting at her desk, on her company provided laptop, she could then get to the company core applications...which often required a special client or software (thick client) to be installed locally on her work PC.
 

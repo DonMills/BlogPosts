@@ -12,7 +12,7 @@ But now Alicia can't go to her office.  And even if she took her laptop home, it
 
 #### Operations through intermittent VPN connections
 
-Unless you planned for this, and have lots of bandwidth (and robust, scaleable VPN termination) I'm sure you've seen some interesting issues.  Not just the ones at first - where the load was more than anyone planned.  I mean the slow, creeping operational and security problems that have arisen. 
+Unless you planned for this, and have lots of bandwidth (and robust, scalable VPN termination) I'm sure you've seen some interesting issues.  Not just the ones at first - where the load was more than anyone planned.  I mean the slow, creeping operational and security problems that have arisen. 
 
 Like unless you prepared with SaaS or public virus updates, there's that virus database update that happens often when people connect to the VPN.  And unless you do automated updates direct from a public source, there's the matter of pushing patches and updates across the VPN connection.
 

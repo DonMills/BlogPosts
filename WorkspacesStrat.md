@@ -39,12 +39,39 @@ AWS Workspaces, if you are at all familiar with Amazon Web Services, are the des
 
 #### Five ways AWS Workspaces can help you today
 
-1. __Financial__:  I put this first as it is always a huge incentive to be able to provide services at lower cost.  AWS Workspaces can help in multiple ways here, but a few to consider are:
-    a. Cheaper end devices - since AWS Workspaces keep all the compute and storage in the cloud, your users need very minimal in the way of local equipment.  The Workspaces client runs on most operating systems, as well as Android and IOS.  So everything from tablets to Chromebooks to lower end Windows laptops are perfectly fine as a display terminal for the remote workspace
-    b. 
-1. Provide secured work environment
-1. Increased resiliency
-1. Keep current security posture
-1. utilize current operations tools
+1. __Financial__:  I put this first as it is always a huge incentive to be able to provide services at lower cost.  AWS Workspaces can help in multiple ways here, but a few to consider are:  
+  * Cheaper end devices - AWS Workspaces keep all the compute and storage in the cloud, and thus your users need very minimal in the way of local equipment.  The Workspaces client runs on most operating systems, as well as Android and IOS.  So everything from tablets to Chromebooks to lower end Windows laptops are perfectly fine as a display terminal for the remote workspace  
+  * Less dedicated VPN infrastructure - Since Workspaces use the AWS Cloud with it's huge amount of bandwith, you no longer need to funnel all your workers through on-premise VPN devices (which required at least two for redundancy, more licensing, more circuits...)  
+    
+2. __Provide secured work environment__:  Unless you have a very comprehensive security program, and have purchased some very expensive tools, you know as well as I that you can  configure a secure laptop and hand it to someone...but they still have physical access.  And to make it worse, a week or two after you hand it to them, it's probably out of date for patches and updates.  Now we discussed doing this over the VPN above, and if that works for you...great.  But for everyone else, Workspaces have some advantages.
+  * Master or Golden Image capability - Since Workspaces are virtual machines, you can create a highly secured and customized "golden" or master image for your purposes, and use it to stamp out as many workspaces as you want.  
+  * Updates - As regular updates occur, you can update the golden image instead of each individual workspace.  Then you can rebuild all existing workspaces with the new image for seamless updating.
+  * Encrypted drives - You can use AWS's Key Management System (KMS) to encrypt the user volumes on the Workspace.
+  * No physical access - This means no USB drives, or other external physical media to bring malicious code into your environment. And, even if you _don't_ encrypt your Workspace drives, a lost laptop will not put your data in danger.
+  
+3. __Increased resiliency__: By using the underlying toolsets that AWS provides, Workspaces can be made very resilient.  
+  * Dedicated user drive - Workspaces provide a dedicated "User" data drive (such as a D: drive in Windows OS's) that is used to store all user created information. This drive is an Elastic Block Store (EBS) volume under the hood, and thus has all the resiliency of that service.  This separation of user data and operating system allows Workspaces to be rebuilt and updated without loss of user data.
+  * Automated snapshots - All Workspace volumes have a snapshot taken every 12 hours.  This can be used to restore or rebuild any Workspace off of a snapshot.
+  * Regional failover - An individual workspace can be made geographically resilient through DNS failover to a second workspace in another region.  By using the AWS WorkDocs feature, user data can be securely replicated between regional instances.
+  
+4. __Keep current security posture__: If you are currently dependent on the "Fortification" strategy of security, or you have specific security constraints around network level access to your business applications, Workspaces are an excellent choice.  The only requirement is the thought process of moving your secure network boundary to include the Workspaces.
+  * Secure access to AWS hosted applications - If you already have invested in AWS to host your internal applications, then by using Workspaces you can give your users secure access to those applications across the AWS backbone, or even inside the same Virtual Private Cloud (VPC). 
+  * Secure access to on-premise applications - Applications that reside on premise can be reached securely by Workspaces either through much cheaper point-to-point (lan-to-lan) VPN from AWS to your datacenter, or through dedicated Direct Connect circuits.
+  * Concerns about access to Workspaces - If the fact that Workspaces are cloud based is an issue, there are multiple ways to mitigate concerns.  IP address connection filtering, requiring certificates to connect, and specific lockdowns to specific client machines are all features.
+ 
+5. __Utilize current operations and security tools__:  Workspaces are provisioned per user using Active Directory.  This allows you to use your current AD investment to provision and authenticate your users.  Your current AD login and password will be what you use to gain access to your Workspace.
+  * Managed with on-premise tools - You can use the Direct Connect or point-to-point VPN connection mentioned above to manage Workspaces with your current on-premise tools __today__.
+  * Just like your own devices, but in the cloud - Since you are providing a customized, secured, and configured work environment to your end users, the management of the workspaces is just like your traditional on-premise desktops and laptops (without hardware failures).  All your familiar tools can be used for monitoring, management, and reporting.
+  * Bring Your Own License (BYOL) - If you have significant investment in Windows licensing, Workspaces can also use your enterprise licenses for cheaper costs.
+  
+#### Wrapping it up
+  
+Sounds pretty good, doesn't it?  I think Workspaces are an underutilized AWS service that may well be coming into its own due to our current situation.
+
+If you think you might be interested in putting the power of AWS Workspaces to work for you then contact SingleStone Consulting today.  We can help you with any part of your cloud journey, and we can help you do it correctly and securely the first time.  Or, if you are ready to truly attack "zero trust", our Security and AppDev teams can make it manageable.
+
+
+  
+  
 
 

@@ -35,7 +35,7 @@ We all know that VDI (virtual desktop initiatives) have long been overly complex
 
 But you know who has tons of storage and compute power ready?  AWS! And so they offer AWS Workspaces, which they refer to as "Desktops as a Service".
 
-AWS Workspaces, if you are at all familiar with Amazon Web Services, are the desktop versions of the classic EC2 infrastructure instances.  They can live inside your AWS Virtual Private Cloud (VPC), and they are provisioned and managed centrally through a dedicated set of tools within the AWS Console.  Users connect to these instances via a dedicated AWS client that uses the PCoIP (PC over IP protocol) to provide a seamless desktop experience.
+AWS Workspaces, if you are at all familiar with Amazon Web Services, are the desktop versions of the traditional EC2 infrastructure instances.  They can live inside your AWS Virtual Private Cloud (VPC), and they are provisioned and managed centrally through a dedicated set of tools within the AWS Console.  Users connect to these instances via a dedicated AWS client that uses the [PCoIP](https://en.wikipedia.org/wiki/Teradici#PCoIP_Protocol) (PC over IP protocol) to provide a seamless desktop experience.
 
 #### Five ways AWS Workspaces can help you today
 
